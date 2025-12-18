@@ -137,6 +137,30 @@ variable "emr_clusters" {
   default = {}
 }
 
+#=================================================================
+# Athena Configuration (Map of Objects)
+#=================================================================
+variable "athena_workgroups" {
+  description = "Map of Athena workgroups to create"
+  type = map(object({
+    name                                = string
+    description                         = optional(string, "")
+    state                               = optional(string, "ENABLED")
+    enforce_workgroup_configuration     = optional(bool, true)
+    publish_cloudwatch_metrics_enabled  = optional(bool, true)
+    bytes_scanned_cutoff_per_query      = optional(number, 0)
+    enable_encryption                   = optional(bool, true)
+    encryption_option                   = optional(string, "SSE_KMS")
+    
+    databases = optional(map(object({
+      name          = string
+      comment       = optional(string, "")
+      force_destroy = optional(bool, false)
+    })), {})
+  }))
+  default = {}
+}
+
 variable "common_tags" {
   description = "Common tags for all resources"
   type        = map(string)

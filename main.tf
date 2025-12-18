@@ -32,6 +32,19 @@ module "emr_clusters" {
 
 
 
+#===============================================================
+# Athena Configuration
+#===============================================================
+module "athena" {
+  source            = "./modules/athena"
+  environment       = var.environment
+  common_tags       = var.common_tags
+  athena_workgroups = var.athena_workgroups
+}
+
+
+
+
 #=================================================================
 # MSK Outputs
 #=================================================================
